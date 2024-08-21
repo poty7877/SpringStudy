@@ -34,7 +34,5 @@
 	<!-- mybatis는 PreparedStatement 를 사용하지 않고 인터페이스 + xml 로 매핑한다. -->
 	<!-- mybatis에서 자동으로 처리할 패키지 명시 -->
 	<mybatis-spring:scan base-package="org.zerock.mapper"/>
-	<context:component-scan base-package="org.zerock.service"> <!-- 스프링에서 @Service를 찾는다. -->
-	
-	</context:component-scan>
+	<context:component-scan base-package="org.zerock.service"/> <!-- 스프링에서 @Service를 찾는다. -->
 </beans>

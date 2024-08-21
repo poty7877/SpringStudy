@@ -10,7 +10,7 @@ create table tbl_board (
 ) -- tbl_board 테이블 생성 (번호, 제목, 내용, 작성자, 작성일, 수정일)
 
 alter table tbl_board add constraint pk_board primary key (bno);
-
+select * from dual;
 select * from tbl_board;
 
 insert into tbl_board (bno, title, content, writer) values(seq_board.nextval, 'test 제목', 'test 내용', 'user00' );

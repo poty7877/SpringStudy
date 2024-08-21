@@ -22,7 +22,7 @@
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="bno" order="BEFORE"
 			resultType="long">
-			select seq_board.nextval from dual
+			select SEQ_BOARD.nextval from dual
 		</selectKey> <!-- insert 전에 번호를 미리 만들어 놓음 -->
 		<![CDATA[
 			insert into tbl_board (bno, title, content, writer) values(#{bno}, #{title}, #{content}, #{writer})
