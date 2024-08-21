@@ -1,14 +1,12 @@
-package org.zerock.domain; // domain 패키지는 DTO,VO 같은 객체를 담당
+package org.zerock.domain;
 
 import java.util.Date;
 
 import lombok.Data;
 
-@Data	// getter, setter, toString, equal, 생성자 등을 관여한다.
+@Data
 public class BoardVO {
-	// tbl_board에 있는 객체를 담당
-	
-	private long bno;
+	private Long bno;
 	private String title;
 	private String content;
 	private String writer;

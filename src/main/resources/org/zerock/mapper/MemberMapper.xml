@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- xml를 활용한 공통코드 -->
+<!-- 매핑할 인터페이스를 namespace에 넣는다. 패키지명.인터페이스명 -->
+<mapper namespace="org.zerock.mapper.MemberMapper">
+
+	<select id="get" resultType="org.zerock.domain.MemberVO">
+	<![CDATA[
+	select * from tbl_member where mno = #{mno}
+	]]>
+	</select>
+	
+	<select id="getList" resultType="org.zerock.domain.MemberVO">
+	<![CDATA[
+	select * from tbl_member where mno > 0
+	]]>
+	</select>
+	
+	<insert id="insert">
+	<![CDATA[
+	insert into tbl_member(mno, name, email, id, pw)
+	values(seq_member.nextval, #{name}, #{email}, #{id}, #{pw})
+	]]>
+	</insert>
+	
+	<insert id="insertSelectKey">
+	<selectKey keyProperty="mno" order="BEFORE" resultType="long">
+		select seq_member.nextval from dual	
+	</selectKey>
+	<![CDATA[
+	insert into tbl_member(mno, name, email, id, pw)
+	values(#{mno}, #{name}, #{email}, #{id}, #{pw})
+	]]>
+	</insert>
+	
+	<update id="update">
+	<![CDATA[
+	update tbl_member set name = #{name}, email = #{email}, id = #{id}, pw = #{pw} where mno = #{mno}
+	]]>
+	</update>
+	
+	<delete id="delete">
+	<![CDATA[
+	delete from tbl_member where mno = #{mno}
+	]]>
+	</delete>
+
+
+</mapper>
