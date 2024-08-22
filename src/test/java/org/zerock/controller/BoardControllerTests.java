@@ -16,8 +16,8 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "file:src/main/webapp/WEB-INF/spring/root-context.xml",
-		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" }) // 프론트영역 테스트용
+@ContextConfiguration({ "file:src/main/webapp/WEB-INF/spring/root-context.xml", // mybatis, service 담당
+		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" }) // Controller 담당 프론트영역 테스트용
 @Log4j2
 // ------------------------------------------------ 위 3개는 테스트 공용필수
 
@@ -40,7 +40,7 @@ public class BoardControllerTests {
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list")) // url
 //				Mapped "{[/board/list],methods=[GET]}" onto public void org.zerock.controller.BoardController.list(org.springframework.ui.Model)
 				.andReturn() // 결과
-				.getModelAndView() // model에서 view까지
+				.getModelAndView() // model에서 view까지 (스프링에서 관리하는 model영역 , 프론트에서 관리하는 View 영역)
 				.getModelMap()); // 표형식
 	}
 
@@ -68,7 +68,7 @@ public class BoardControllerTests {
 				.andReturn()
 				.getModelAndView()
 				.getModelMap()); // select의 결과는 getModelMap
-								// int, boolean, string의 결과는 getViewName
+								 // int, boolean, string의 결과는 getViewName
 	
 	}
 	
