@@ -1,6 +1,10 @@
 --------------------------------------------- 게시판용
 create sequence seq_board;
 
+drop sequence seq_board;
+
+delete from TBL_BOARD;
+
 create table tbl_board (
   bno number(10,0),
   title varchar2(200) not null,
@@ -27,7 +31,7 @@ create table tbl_reply (
 	replyDate date default sysdate,
 	updateDate date default sysdate );
 
-create sequence seq_reply ; -- 댓글용 자동번호객체 추가
+create sequence seq_reply; -- 댓글용 자동번호객체 추가
 
 alter table tbl_reply add constraint pk_reply primary key (rno); 
 -- pk를 rno로 지정(롤이름 : pk_reply)
@@ -35,6 +39,19 @@ alter table tbl_reply add constraint pk_reply primary key (rno);
 alter table tbl_reply add constraint fk_reply_board foreign key (bno) references tbl_board (bno); 
 -- tbl_reply의 bno(자)와 tbl_board의 bno(부)를 연결 (부모가 있어야 자식이 있다) 
 
+insert into tbl_reply (rno,bno,reply,replyer)
+		values (seq_.nextval, 11, '댓글11', 'kkw');
+		insert into tbl_reply (rno,bno,reply,replyer)
+		values (seq_board.nextval, 10, '댓글10', 'kkw');
+		insert into tbl_reply (rno,bno,reply,replyer)
+		values (seq_board.nextval, 9, '댓글9', 'kkw');
+		insert into tbl_reply (rno,bno,reply,replyer)
+		values (seq_board.nextval, 8, '댓글8', 'kkw');
+		insert into tbl_reply (rno,bno,reply,replyer)
+		values (seq_board.nextval, 7, '댓글7', 'kkw');
+		insert into tbl_reply (rno,bno,reply,replyer)
+		values (seq_board.nextval, 6, '댓글6', 'kkw');
+		select * from tbl_reply 
 
 
 
