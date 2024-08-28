@@ -8,63 +8,74 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+// Java Config
+// @ContextConfiguration(classes = {org.zerock.config.RootConfig.class} )
 @Log4j2
 public class BoardServiceTests {
 
-	@Setter(onMethod_ = @Autowired)
-	private BoardService service; // setService(BoardService)
+	@Setter(onMethod_ = { @Autowired })
+	private BoardService service;
 
 	@Test
 	public void testExist() {
-		// 객체 생성 유무 판단용 테스트
+
 		log.info(service);
-		// 인터페이스를 필드로 생성 하고, 서비스를 객체를 실행하면 impl이 붙은 class가 실행이 된다.
-		assertNotNull(service); // service가 null 값이어도 그냥 진행
+		assertNotNull(service);
 	}
 
 	@Test
 	public void testRegister() {
-		BoardVO boardVO = new BoardVO();
-		boardVO.setTitle("서비스로 만든 제목");
-		boardVO.setContent("서비스로 만든 내용");
-		boardVO.setWriter("서비스 작성자");
 
-		service.register(boardVO);
+		BoardVO board = new BoardVO();
+		board.setTitle("새로 작성하는 글");
+		board.setContent("새로 작성하는 내용");
+		board.setWriter("newbie");
 
-		log.info("등록된 게시물의 번호 : " + boardVO.getBno());
-	}
+		service.register(board);
 
-	@Test
-	public void testGet() {
-		log.info(service.get(3L));
+		log.info("생성된 게시물의 번호: " + board.getBno());
 	}
 
 	@Test
 	public void testGetList() {
-		service.getList().forEach(boardVO -> log.info(boardVO));
+
+		// service.getList().forEach(board -> log.info(board));
+		service.getList(new Criteria(2, 10)).forEach(board -> log.info(board));
 	}
 
 	@Test
-	public void testModify() {
-		BoardVO boardVO = service.get(1L);
-		if (boardVO == null) {
-			log.info("찾는 객체가 없습니다.");
-			return;
-		}
-		boardVO.setTitle("서비스에서 수정한 제목");
-		log.info("서비스에서 수정메서드 결과  : " + service.modify(boardVO)); // boolean
+	public void testGet() {
+
+		log.info(service.get(1L));
 	}
 
 	@Test
 	public void testDelete() {
 
-		log.info("삭제된결과 : " + service.remove(3L));
+		// 게시물 번호의 존재 여부를 확인하고 테스트할 것
+		log.info("REMOVE RESULT: " + service.remove(2L));
+
+	}
+
+	@Test
+	public void testUpdate() {
+
+		BoardVO board = service.get(1L);
+
+		if (board == null) {
+			return;
+		}
+
+		board.setTitle("제목 수정합니다.");
+		log.info("MODIFY RESULT: " + service.modify(board));
 	}
 
 }
